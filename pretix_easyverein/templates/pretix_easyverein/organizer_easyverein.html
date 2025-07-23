@@ -1,0 +1,24 @@
+{% extends "pretixcontrol/base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% load hierarkey_form %}
+{% load formset_tags %}
+{% block title %}{% trans "EasyVerein Settings" %}{% endblock %}
+{% block content %}
+    <h1>
+        {% trans "EasyVerein Settings" %}
+    </h1>
+
+    <form action="" method="post" class="form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% url "control:global.settings" as g_url %}
+        {% propagated request.organizer g_url "ev_api_key" "ev_import_bankstatements" %}
+            {% bootstrap_form form layout="control" %}
+        {% endpropagated %}
+        <div class="form-group submit-group">
+            <button type="submit" class="btn btn-primary btn-save">
+                {% trans "Save" %}
+            </button>
+        </div>
+    </form>
+{% endblock %}

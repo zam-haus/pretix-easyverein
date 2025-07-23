@@ -1,0 +1,5 @@
+[plugin]
+package = "pretix-easyverein"
+modules = [ "pretix_easyverein" ]
+marketplace_name = "easyverein"
+
