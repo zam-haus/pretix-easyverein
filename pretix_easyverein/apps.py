@@ -23,6 +23,7 @@ class PluginApp(PluginConfig):
         compatibility = "pretix>=2024.11.0.dev0"
         settings_links = []
         navigation_links = []
+        restricted = True
 
     def ready(self):
         from . import signals  # NOQA
