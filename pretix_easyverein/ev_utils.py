@@ -61,11 +61,17 @@ def _eV_poll_for_onlinebankingimport_completion(session: requests.Session):
         r = session.get(url)
         r.raise_for_status()
         retry = False
-        for task in r.json()["tasks"]:
+        try:
+            json = r.json()
+        except requests.JSONDecodeError:
+            logger.error("Unable to decode response as json: {r.text}")
+            time.sleep(5)
+            return
+        for task in json["tasks"]:
             if (
-                "details" not in task
-                or "mode" not in task["details"]
-                or task["details"]["mode"] != "ONLINEBANKING_IMPORT"
+                not task.get("details") or
+                not task["details"].get("mode") or
+                task["details"]["mode"] != "ONLINEBANKING_IMPORT"
             ):
                 # only handle onlinebanking import tasks
                 continue

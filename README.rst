@@ -12,6 +12,7 @@ What it does:
 * [ ] Upload invoices (as well as cancelation invoices) to easyverein
 * [ ] Mark invoice payed on eV and pretix if payment was detected
 * [ ] Mark orders payed if invoice is marked payed on easyverein
+* [ ] Manually trigger import and processing
 
 Configuration:
 
