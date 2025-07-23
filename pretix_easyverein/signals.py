@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django_scopes import scopes_disabled
+from django.utils import timezone
 from easyverein import EasyvereinAPI
 from easyverein.models.invoice import Invoice as EVInvoice
 from pretix.base.forms import SecretKeySettingsField
@@ -104,7 +105,7 @@ def bankimport_from_easyverein(sender, **kwargs):
     # make sure this runs only every 6 hours
     try:
         last_import = BankImportJob.objects.latest("created").created
-        if last_import + datetime.timedelta(hours=6) > datetime.datetime.now():
+        if last_import + datetime.timedelta(hours=6) > timezone.now():
             # nothing todo
             return
     except BankImportJob.DoesNotExist:
