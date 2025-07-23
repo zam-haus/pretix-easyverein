@@ -17,12 +17,12 @@ def eV_import():
     for org in Organizer.objects.all():
         logger.info(f"Bank import from easyverein for {org}.")
         # Skip orgs that have import not configured
-        if org.settings.get("easyverein_import_bankstatements") is None:
+        if not org.settings.get("easyverein_import_bankstatements"):
             continue
 
         ev_api_key = org.settings.get("easyverein_api_key")
         # Skip (and log) orgs that have it configured, but no api key
-        if ev_api_key is None:
+        if not ev_api_key:
             logger.warning(
                 f"{org} has easyverein_import_bankstatements enabled, "
                 "but no easyverein_api_key configured."
