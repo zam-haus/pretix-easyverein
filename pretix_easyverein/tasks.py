@@ -60,4 +60,4 @@ def eV_import():
         )
 
         # auto discard all unmatched transaction for data minimization
-        # job.transactions.filter(state=BankTransaction.STATE_NOMATCH).update(payer='', reference='', amount=0, state=BankTransaction.STATE_DISCARDED)
+        job.transactions.filter(state=BankTransaction.STATE_NOMATCH).update(payer='', reference='', amount=0, state=BankTransaction.STATE_DISCARDED)
