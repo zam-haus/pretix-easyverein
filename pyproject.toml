@@ -4,7 +4,6 @@ dynamic = ["version"]
 description = "Connects pretix with easyverein"
 readme = "README.rst"
 license = "Apache-2.0"
-license-file = "LICENSE"
 keywords = ["pretix"]
 authors = [
     {name = "Julian Hammer", email = "julian.hammer@betreiberverein.de"},
