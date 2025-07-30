@@ -69,9 +69,9 @@ def _eV_poll_for_onlinebankingimport_completion(session: requests.Session):
             return
         for task in json["tasks"]:
             if (
-                not task.get("details") or
-                not task["details"].get("mode") or
-                task["details"]["mode"] != "ONLINEBANKING_IMPORT"
+                not task.get("details")
+                or not task["details"].get("mode")
+                or task["details"]["mode"] != "ONLINEBANKING_IMPORT"
             ):
                 # only handle onlinebanking import tasks
                 continue

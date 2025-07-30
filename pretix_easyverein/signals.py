@@ -9,9 +9,9 @@ from django.db import connection, transaction
 from django.db.models import Q
 from django.dispatch import receiver
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django_scopes import scopes_disabled
-from django.utils import timezone
 from easyverein import EasyvereinAPI
 from easyverein.models.invoice import Invoice as EVInvoice
 from pretix.base.forms import SecretKeySettingsField
