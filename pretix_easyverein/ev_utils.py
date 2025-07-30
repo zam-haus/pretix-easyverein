@@ -54,7 +54,7 @@ def _eV_onlinebankingimport(session: requests.Session, bankaccount_ids: List[str
 
 
 def _eV_poll_for_onlinebankingimport_completion(session: requests.Session):
-    logger.info("Waiting for any eV onlinebanking tasks to complete.")
+    # logger.info("Waiting for any eV onlinebanking tasks to complete.")
     url = "https://easyverein.com/app/api/get-tasks/"
     retry = True
     while retry:
@@ -83,7 +83,7 @@ def _eV_poll_for_onlinebankingimport_completion(session: requests.Session):
                 time.sleep(5)
                 retry = True
                 break
-    logger.info("All eV onlinebanking tasks completed.")
+    # logger.info("All eV onlinebanking tasks completed.")
 
 
 def _eV_remove_task(session: requests.Session, task_id: str):
@@ -95,7 +95,7 @@ def eV_trigger_and_wait_for_onlinebankingimport(
     short, email, password, bankaccount_ids
 ):
     session = _eV_login(short, email, password)
-    logger.info("Triggering eV onlinebanking import.")
+    # logger.info("Triggering eV onlinebanking import.")
     _eV_onlinebankingimport(session, bankaccount_ids)
 
 

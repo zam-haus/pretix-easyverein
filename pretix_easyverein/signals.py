@@ -102,13 +102,26 @@ def find_ev_invoice(pt_i, ev_invoices: Dict[str, EVInvoice]) -> Optional[EVInvoi
 @receiver(signal=periodic_task)
 @scopes_disabled()
 def bankimport_from_easyverein(sender, **kwargs):
-    # make sure this runs only every 6 hours
+    # make sure this runs at next interval after 9h and 15h
     try:
         last_import = BankImportJob.objects.latest("created").created
-        if last_import + datetime.timedelta(hours=6) > timezone.now():
-            # nothing todo
+        now = timezone.now()
+        if now.weekday == 6 or now.weekday == 5:
+            # Sundays and Saturdas, banks do nothing
+            return
+        if 9 <= now.hour < 16 and last_import < now.replace(hour=9, minute=0):
+            # nine o'clock check is overdue
+            # do it now!
+            pass
+        elif now.hour >= 16 and last_import < now.replace(hour=16, minute=0):
+            # four pm check is overdue
+            # do it now!
+            pass
+        else:
+            # nothing to do
             return
     except BankImportJob.DoesNotExist:
+        # first bank import job
         pass
 
     eV_import()

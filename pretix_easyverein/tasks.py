@@ -15,7 +15,7 @@ def eV_import():
     bankstatements_per_key = dict()
 
     for org in Organizer.objects.all():
-        logger.info(f"Bank import from easyverein for {org}.")
+        # logger.info(f"Bank import from easyverein for {org}.")
         # Skip orgs that have import not configured
         if not org.settings.get("easyverein_import_bankstatements"):
             continue
@@ -45,7 +45,6 @@ def eV_import():
             )
 
             # Import bankstatement from eV
-            logger.info("Fetching bankstatement from eV.")
             bankstatement = eV_get_bankstatements(ev_api_key, days_back=8)
             bankstatements_per_key[ev_api_key] = bankstatement
 
@@ -54,10 +53,10 @@ def eV_import():
         process_banktransfers.apply_async(kwargs={"job": job.pk, "data": bankstatement})
         kwargs = {"organizer": org, "job": job.pk}
 
-        logger.info(
-            f"Bank import from easyverein for {org} finished: {reverse('plugins:banktransfer:import.job', kwargs=kwargs)} "
-            f"{job.transactions.filter(state=BankTransaction.STATE_VALID).count()} matched."
-        )
+        # logger.info(
+        #     f"Bank import from easyverein for {org} finished: {reverse('plugins:banktransfer:import.job', kwargs=kwargs)} "
+        #     f"{job.transactions.filter(state=BankTransaction.STATE_VALID).count()} matched."
+        # )
 
         # auto discard all unmatched transaction for data minimization
         job.transactions.filter(state=BankTransaction.STATE_NOMATCH).update(payer='', reference='', amount=0, state=BankTransaction.STATE_DISCARDED)

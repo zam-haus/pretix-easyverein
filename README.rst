@@ -10,7 +10,7 @@ What it does:
 * [x] Trigger onlinebanking import with easyverein
 * [x] Fetch bankstatement from easyverein and processes them in pretix
 * [ ] Upload invoices (as well as cancelation invoices) to easyverein
-* [ ] Mark invoice payed on eV and pretix if payment was detected
+* [ ] Book invoice to payment on eV if was matched by pretix
 * [ ] Mark orders payed if invoice is marked payed on easyverein
 * [ ] Manually trigger import and processing
 
