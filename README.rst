@@ -24,7 +24,7 @@ Limitations:
 * eV invoice status changes from payed to unpayed are not synced to pretix
 * Cancelations of pretix invoices in eV are not synced to pretix
 
-Periodic Task (every 6 hours):
+Periodic Task (run in the morning and afternon on banking days):
 
 1. (not-yet-implemented) Upload all not-yet-uploaded invoices to eV
 2. Trigger eV bankstatement fetch
