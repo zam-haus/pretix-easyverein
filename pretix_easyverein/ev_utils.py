@@ -119,10 +119,6 @@ def eV_get_bankstatements(api_key, days_back=None):
     # ["date", "amount", "reference", "payer", "IBAN", "BIC"]
     statement = []
     for b in bookings:
-        # filter outgoing payments. not relevant to pretix
-        if b.amount and b.amount < 0:
-            continue
-
         # mandatory entries:
         row = {}
         if b.date:
