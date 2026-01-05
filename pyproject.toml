@@ -13,7 +13,8 @@ maintainers = [
 ]
 
 dependencies = [
-    "python-easyverein"
+    "python-easyverein>=2.1.2",
+    "requests"
 ]
 
 [project.entry-points."pretix.plugin"]

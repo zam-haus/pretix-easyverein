@@ -99,8 +99,11 @@ def eV_trigger_and_wait_for_onlinebankingimport(
     _eV_onlinebankingimport(session, bankaccount_ids)
 
 
-def eV_get_bankstatements(api_key, days_back=None):
-    ev = easyverein.EasyvereinAPI(api_key)
+def eV_get_bankstatements(api_key, days_back=None, new_api_key_handler=None):
+    ev = easyverein.EasyvereinAPI(
+        api_key,
+        token_refresh_callback=new_api_key_handler,
+        auto_refresh_token=True)
 
     search_filter = None
     if days_back:

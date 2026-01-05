@@ -9,7 +9,6 @@ from .ev_utils import eV_get_bankstatements, eV_trigger_and_wait_for_onlinebanki
 
 logger = logging.getLogger(__name__)
 
-
 @app.task
 def eV_import():
     bankstatements_per_key = dict()
@@ -45,7 +44,10 @@ def eV_import():
             )
 
             # Import bankstatement from eV
-            bankstatement = eV_get_bankstatements(ev_api_key, days_back=8)
+            bankstatement = eV_get_bankstatements(
+                ev_api_key,
+                days_back=8,
+                new_api_key_handler=lambda new_token: org.settings.set("easyverein_api_key", new_token.Bearer))
             bankstatements_per_key[ev_api_key] = bankstatement
 
         # create import job
@@ -53,10 +55,11 @@ def eV_import():
         process_banktransfers.apply_async(kwargs={"job": job.pk, "data": bankstatement})
         kwargs = {"organizer": org, "job": job.pk}
 
-        # logger.info(
-        #     f"Bank import from easyverein for {org} finished: {reverse('plugins:banktransfer:import.job', kwargs=kwargs)} "
-        #     f"{job.transactions.filter(state=BankTransaction.STATE_VALID).count()} matched."
-        # )
+        logger.info(f"{len(bankstatement)} statements processed")
+        logger.info(
+            f"Bank import from easyverein for {org} finished: {reverse('plugins:banktransfer:import.job', kwargs=kwargs)} "
+            f"{job.transactions.filter(state=BankTransaction.STATE_VALID).count()} matched."
+        )
 
         # auto discard all unmatched transaction for data minimization
         job.transactions.filter(state=BankTransaction.STATE_NOMATCH).update(

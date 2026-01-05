@@ -200,7 +200,7 @@ def register_global_settings_easyverein(sender, **kwargs):
                     required=False,
                     help_text=_(
                         'Comma-seperated list of ids, e.g. "123,4567". Find them with this API URL: '
-                        "https://hexa.easyverein.com/api/v1.7/bank-account"
+                        "https://hexa.easyverein.com/api/v2.0/bank-account"
                     ),
                     validators=[validators.RegexValidator(r"[0-9]+(,[0-9]+)*")],
                 ),
